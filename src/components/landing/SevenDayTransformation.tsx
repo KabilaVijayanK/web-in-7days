@@ -7,106 +7,118 @@ import {
   Zap,
   Rocket,
 } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+
 
 const steps = [
-  {
-    day: "Day 1",
-    icon: Users,
-    title: "Strategy & Discovery",
-    desc: "Deep dive into your business goals, target audience, competitors, and brand positioning to build a strong foundation.",
-  },
-  {
-    day: "Day 2",
-    icon: CalendarDays,
-    title: "Content & Assets",
-    desc: "Gather all materials, refine messaging, optimize copy, images, and brand assets to align with your vision.",
-  },
-  {
-    day: "Day 3",
-    icon: Palette,
-    title: "Design & Wireframes",
-    desc: "Create conversion-focused layouts, user flows, and modern UI designs tailored to your brand identity.",
-  },
-  {
-    day: "Day 4",
-    icon: RefreshCcw,
-    title: "Refinement & Approval",
-    desc: "Polish designs based on your feedback and finalize structure before moving into development.",
-  },
-  {
-    day: "Day 5",
-    icon: Code2,
-    title: "Development & Build",
-    desc: "Transform approved designs into a fast, responsive, and fully functional website.",
-  },
-  {
-    day: "Day 6",
-    icon: Zap,
-    title: "Testing & Optimization",
-    desc: "Performance tuning, SEO setup, mobile responsiveness, cross-browser testing, and bug fixes.",
-  },
-  {
-    day: "Day 7",
-    icon: Rocket,
-    title: "Launch & Handover",
-    desc: "Your website goes live with training, documentation, and post-launch support included.",
-  },
+  { day: "Day 1", icon: Users, title: "Strategy", desc: "Understand goals & audience." },
+  { day: "Day 2", icon: CalendarDays, title: "Content", desc: "Collect assets & finalize copy." },
+  { day: "Day 3", icon: Palette, title: "Design", desc: "Create modern UI layout." },
+  { day: "Day 4", icon: RefreshCcw, title: "Refinement", desc: "Feedback & approval." },
+  { day: "Day 5", icon: Code2, title: "Development", desc: "Build responsive site." },
+  { day: "Day 6", icon: Zap, title: "Testing", desc: "Speed & SEO optimization." },
+  { day: "Day 7", icon: Rocket, title: "Launch", desc: "Go live with support." },
 ];
+
+const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
 
 const SevenDayTransformation = () => {
   return (
-    <section className="relative bg-gradient-to-b from-blue-50 to-white py-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section className="bg-gradient-to-b from-blue-50 to-white py-14 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
 
-        {/* Heading */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900">
+        {/* Heading Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-10"
+        >
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900">
             Your 7-Day Transformation
           </h2>
-          <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-            From strategy to launch, here's your step-by-step journey to a website
-            that converts visitors into customers.
+          <p className="mt-2 text-sm text-gray-600">
+            Simple. Structured. Fast.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Timeline Wrapper */}
+        {/* Timeline */}
         <div className="relative">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="hidden xl:block absolute top-10 left-0 right-0 h-[2px] bg-blue-200 origin-left"
+          />
 
-          {/* Horizontal Line */}
-          <div className="hidden xl:block absolute top-16 left-0 right-0 h-1 bg-blue-200 z-0" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-8 relative z-10">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4 relative"
+          >
 
             {steps.map((step, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="relative bg-white border border-blue-100 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center min-h-[320px]"
+                variants={cardVariants}
+                whileHover={{ y: -6 }}
+                className="relative bg-white border border-blue-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center min-h-[180px]"
               >
 
                 {/* Day Badge */}
-                <div className="absolute -top-5 px-4 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full shadow-md">
+                <div className="absolute -top-3 px-2 py-[3px] text-[10px] font-semibold bg-blue-600 text-white rounded-full">
                   {step.day}
                 </div>
 
-                {/* Icon */}
-                <div className="mt-8 mb-5 w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center shadow-md">
-                  <step.icon className="w-7 h-7 text-white" />
-                </div>
+                {/* Icon Pop Animation */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
+                  className="mt-4 mb-2 w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center"
+                >
+                  <step.icon className="w-5 h-5 text-white" />
+                </motion.div>
 
-                {/* Title */}
-                <h3 className="text-base font-bold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900">
                   {step.title}
                 </h3>
 
-                {/* Description */}
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-[11px] text-gray-600 mt-1">
                   {step.desc}
                 </p>
 
-              </div>
+              </motion.div>
             ))}
 
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

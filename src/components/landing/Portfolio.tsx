@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const projects = [
   { name: "OJK Jobs", tag: "Services", image: "/ojk-jobs.jpg" },
@@ -9,44 +9,51 @@ const projects = [
   { name: "Vamtech", tag: "Technology", image: "/vamtech.jpg" },
   { name: "Digimax", tag: "Marketing", image: "/digimax.jpg" },
   { name: "Shayeen", tag: "E-commerce", image: "/shayeen.jpg" },
+
+  // ✅ NEW CARDS
+  { name: "The Bot Agency", tag: "Agency", image: "/the-bot-agency.jpg" },
+  { name: "Nagarathar Matrimony", tag: "Matrimony", image: "/nagarathar.jpg" },
+  { name: "HRMS System", tag: "Software", image: "/hrms.jpg" },
 ];
 
 const CARD_WIDTH = 420;
 const GAP = 40;
 
 const cloned = [
-  ...projects.slice(-2),
+  ...projects.slice(-3),
   ...projects,
-  ...projects.slice(0, 2),
+  ...projects.slice(0, 3),
 ];
 
 const Portfolio = () => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(3);
   const [transition, setTransition] = useState(true);
 
   const next = () => setActive((prev) => prev + 1);
   const prev = () => setActive((prev) => prev - 1);
 
-  // Auto scroll
+  // 🔥 Fast → smooth slow scroll
   useEffect(() => {
-    const interval = setInterval(next, 4000);
+    const interval = setInterval(() => {
+      next();
+    }, 2500); // faster trigger
     return () => clearInterval(interval);
   }, []);
 
-  // Infinite loop correction
+  // Infinite loop fix
   useEffect(() => {
-    if (active === cloned.length - 2) {
+    if (active === cloned.length - 3) {
       setTimeout(() => {
         setTransition(false);
-        setActive(2);
-      }, 700);
+        setActive(3);
+      }, 900);
     }
 
-    if (active === 1) {
+    if (active === 2) {
       setTimeout(() => {
         setTransition(false);
-        setActive(cloned.length - 3);
-      }, 700);
+        setActive(cloned.length - 4);
+      }, 900);
     }
   }, [active]);
 
@@ -61,97 +68,116 @@ const Portfolio = () => {
   }, [transition]);
 
   return (
-    <section className="relative py-24 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden">
+  <section className="relative py-16 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden">
 
-      {/* Heading */}
-      <div className="text-center mb-16">
-        <h2 className="text-4xl lg:text-5xl font-extrabold">
-          This Could Be Your Site
-        </h2>
-        <p className="text-gray-400 mt-4 text-sm">
-          Real sites. Custom designs. Built fast, built right.
-        </p>
-      </div>
+    {/* Heading */}
+    <div className="text-center mb-10">
+      <h2 className="text-3xl lg:text-4xl font-extrabold">
+        This Could Be Your Site
+      </h2>
+      <p className="text-gray-400 mt-3 text-sm">
+        Real sites. Custom designs. Built fast, built right.
+      </p>
+    </div>
 
-      <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden">
 
-        {/* LEFT */}
-        <button
-          onClick={prev}
-          className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+      {/* LEFT */}
+      <button
+        onClick={prev}
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+      >
+        <ChevronLeft size={18} />
+      </button>
+
+      {/* TRACK */}
+      <div className="flex justify-center">
+        <div
+          className={`flex ${
+            transition
+              ? "transition-transform duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+              : ""
+          }`}
+          style={{
+            gap: `30px`,
+            transform: `translateX(calc(50% - ${
+              active * (CARD_WIDTH + 30) + CARD_WIDTH / 2
+            }px))`,
+          }}
         >
-          <ChevronLeft size={20} />
-        </button>
+          {cloned.map((project, index) => {
+            const isCenter = index === active;
 
-        {/* TRACK */}
-        <div className="flex justify-center">
-          <div
-            className={`flex ${
-              transition
-                ? "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                : ""
-            }`}
-            style={{
-              gap: `${GAP}px`,
-              transform: `translateX(calc(50% - ${
-                active * (CARD_WIDTH + GAP) + CARD_WIDTH / 2
-              }px))`,
-            }}
-          >
-            {cloned.map((project, index) => {
-              const isCenter = index === active;
+            return (
+              <div
+                key={index}
+                style={{ width: CARD_WIDTH }}
+                className={`flex-shrink-0 transition-all duration-700 ${
+                  isCenter
+                    ? "scale-100 opacity-100"
+                    : "scale-90 opacity-40"
+                }`}
+              >
+                <div className="relative h-[300px] rounded-[28px] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] group">
 
-              return (
-                <div
-                  key={index}
-                  style={{ width: CARD_WIDTH }}
-                  className={`flex-shrink-0 transition-all duration-700 ${
-                    isCenter
-                      ? "scale-100 opacity-100"
-                      : "scale-90 opacity-50"
-                  }`}
-                >
-                  <div className="relative h-[320px] rounded-[32px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.6)] group">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                  />
 
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                    />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                    <div className="absolute top-5 right-5 bg-orange-500 text-black text-xs font-semibold px-4 py-1.5 rounded-full">
-                      {project.tag}
-                    </div>
-
-                    <div className="absolute bottom-8 left-8">
-                      <h3 className="text-2xl font-bold">
-                        {project.name}
-                      </h3>
-                      <p className="text-orange-400 text-sm mt-2">
-                        View demo ↗
-                      </p>
-                    </div>
-
+                  <div className="absolute top-4 right-4 bg-orange-500 text-black text-xs font-semibold px-3 py-1 rounded-full">
+                    {project.tag}
                   </div>
+
+                  <div className="absolute bottom-6 left-6">
+                    <h3 className="text-xl font-bold">
+                      {project.name}
+                    </h3>
+                    <p className="text-orange-400 text-sm mt-1">
+                      View demo ↗
+                    </p>
+                  </div>
+
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-
-        {/* RIGHT */}
-        <button
-          onClick={next}
-          className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
-        >
-          <ChevronRight size={20} />
-        </button>
-
       </div>
-    </section>
-  );
+
+      {/* RIGHT */}
+      <button
+        onClick={next}
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+      >
+        <ChevronRight size={18} />
+      </button>
+    </div>
+
+    {/* ⭐ INDIA MART RATING */}
+    <div className="mt-10 flex flex-col items-center justify-center text-center">
+      <p className="text-gray-400 text-xs mb-2">
+        Rated on IndiaMART
+      </p>
+
+      <div className="flex items-center gap-1">
+        <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+        <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+        <Star className="w-5 h-5 text-gray-600" />
+        <Star className="w-5 h-5 text-gray-600" />
+        <Star className="w-5 h-5 text-gray-600" />
+      </div>
+
+      <p className="text-gray-500 text-xs mt-1">
+        2.0 out of 5 rating
+      </p>
+    </div>
+
+  </section>
+);
 };
 
 export default Portfolio;
