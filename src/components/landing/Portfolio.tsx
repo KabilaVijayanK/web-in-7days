@@ -8,7 +8,7 @@ const projects = [
   { name: "Danesh Industries", tag: "Corporate", image: "/danesh-industries.jpg" },
   { name: "Vamtech", tag: "Technology", image: "/vamtech.jpg" },
   { name: "Digimax", tag: "Marketing", image: "/digimax.jpg" },
-  { name: "Waves", tag: "Community", image: "/waves.jpg" },
+  { name: "Shayeen", tag: "E-commerce", image: "/shayeen.jpg" },
 ];
 
 const CARD_WIDTH = 420;
@@ -21,19 +21,19 @@ const cloned = [
 ];
 
 const Portfolio = () => {
-  const [active, setActive] = useState(2); // start from real first
+  const [active, setActive] = useState(2);
   const [transition, setTransition] = useState(true);
 
   const next = () => setActive((prev) => prev + 1);
   const prev = () => setActive((prev) => prev - 1);
 
+  // Auto scroll
   useEffect(() => {
-    const interval = setInterval(() => {
-      next();
-    }, 3500);
+    const interval = setInterval(next, 4000);
     return () => clearInterval(interval);
   }, []);
 
+  // Infinite loop correction
   useEffect(() => {
     if (active === cloned.length - 2) {
       setTimeout(() => {
@@ -48,16 +48,23 @@ const Portfolio = () => {
         setActive(cloned.length - 3);
       }, 700);
     }
-
-    setTimeout(() => {
-      setTransition(true);
-    }, 750);
   }, [active]);
 
-  return (
-    <section className="relative py-32 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden">
+  useEffect(() => {
+    if (!transition) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTransition(true);
+        });
+      });
+    }
+  }, [transition]);
 
-      <div className="text-center mb-20">
+  return (
+    <section className="relative py-24 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden">
+
+      {/* Heading */}
+      <div className="text-center mb-16">
         <h2 className="text-4xl lg:text-5xl font-extrabold">
           This Could Be Your Site
         </h2>
@@ -71,7 +78,7 @@ const Portfolio = () => {
         {/* LEFT */}
         <button
           onClick={prev}
-          className="absolute left-10 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+          className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
         >
           <ChevronLeft size={20} />
         </button>
@@ -79,7 +86,11 @@ const Portfolio = () => {
         {/* TRACK */}
         <div className="flex justify-center">
           <div
-            className={`flex ${transition ? "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" : ""}`}
+            className={`flex ${
+              transition
+                ? "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                : ""
+            }`}
             style={{
               gap: `${GAP}px`,
               transform: `translateX(calc(50% - ${
@@ -100,12 +111,12 @@ const Portfolio = () => {
                       : "scale-90 opacity-50"
                   }`}
                 >
-                  <div className="relative h-[320px] rounded-[32px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
+                  <div className="relative h-[320px] rounded-[32px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.6)] group">
 
                     <img
                       src={project.image}
                       alt={project.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                     />
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -133,7 +144,7 @@ const Portfolio = () => {
         {/* RIGHT */}
         <button
           onClick={next}
-          className="absolute right-10 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+          className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
         >
           <ChevronRight size={20} />
         </button>

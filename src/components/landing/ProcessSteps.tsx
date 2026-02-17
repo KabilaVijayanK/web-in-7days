@@ -2,39 +2,73 @@ import { ClipboardList, Palette, Rocket } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const steps = [
-  { icon: ClipboardList, title: "Share Requirement", desc: "Tell us about your business and what you need." },
-  { icon: Palette, title: "We Design & Develop", desc: "Our team crafts a stunning, conversion-ready website." },
-  { icon: Rocket, title: "Launch in 7 Days", desc: "Go live with a professional online presence." },
+  {
+    icon: ClipboardList,
+    title: "Share Requirement",
+    desc: "Tell us about your business and what you need.",
+  },
+  {
+    icon: Palette,
+    title: "We Design & Develop",
+    desc: "Our team crafts a stunning, conversion-ready website.",
+  },
+  {
+    icon: Rocket,
+    title: "Launch in 7 Days",
+    desc: "Go live with a professional online presence.",
+  },
 ];
 
 const ProcessSteps = () => (
-  <section id="process" className="section-alt py-24">
-    <div className="container mx-auto px-4">
+  <section
+    id="process"
+    className="py-14 bg-gradient-to-b from-white to-blue-50"
+  >
+    <div className="max-w-5xl mx-auto px-4 lg:px-6">
+
+      {/* Heading */}
       <ScrollReveal>
-        <div className="text-center mb-16">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-3">How It Works</p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">
+        <div className="text-center mb-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
+            How It Works
+          </p>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900">
             Launch in 3 Simple Steps
           </h2>
         </div>
       </ScrollReveal>
 
-      <div className="flex flex-col lg:flex-row gap-8 max-w-4xl mx-auto items-stretch">
+      {/* Steps Grid */}
+      <div className="grid md:grid-cols-3 gap-5">
+
         {steps.map((step, i) => (
-          <ScrollReveal key={step.title} delay={i * 0.15} className="flex-1">
-            <div className="card-lift rounded-2xl bg-card border border-border p-8 text-center h-full relative">
-              {/* Step number */}
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-sm font-bold text-primary-foreground">
+          <ScrollReveal key={step.title} delay={i * 0.12}>
+            <div className="relative bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-blue-100 flex flex-col items-center text-center">
+
+              {/* Step Number */}
+              <div className="absolute -top-3 w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">
                 {i + 1}
               </div>
-              <div className="mt-4 mb-4 mx-auto w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center">
-                <step.icon className="w-7 h-7 text-primary-foreground" />
+
+              {/* Icon */}
+              <div className="mb-4 mt-3 w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center">
+                <step.icon className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">{step.desc}</p>
+
+              {/* Title */}
+              <h3 className="text-base font-bold text-gray-900 mb-1">
+                {step.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {step.desc}
+              </p>
+
             </div>
           </ScrollReveal>
         ))}
+
       </div>
     </div>
   </section>

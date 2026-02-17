@@ -4,6 +4,7 @@ import PricingAnchor from "@/components/landing/PricingAnchor";
 import WhatYouGet from "@/components/landing/WhatYouGet";
 import WhyChooseUs from "@/components/landing/WhyChooseUs";
 import Portfolio from "@/components/landing/Portfolio";
+import SevenDayTransformation from "@/components/landing/SevenDayTransformation";
 import ProcessSteps from "@/components/landing/ProcessSteps";
 import ClosingCTA from "@/components/landing/ClosingCTA";
 import FAQSection from "@/components/landing/FAQSection";
@@ -16,6 +17,7 @@ const Index = () => (
     <PricingAnchor />
     <WhatYouGet />
     <WhyChooseUs />
+    <SevenDayTransformation />
     <Portfolio />
     <ProcessSteps />
     <ClosingCTA />

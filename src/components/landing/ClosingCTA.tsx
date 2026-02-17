@@ -1,36 +1,49 @@
 import { motion } from "framer-motion";
 
 const ClosingCTA = () => (
-  <section id="cta" className="relative py-24 overflow-hidden">
-    <div className="absolute inset-0 gradient-primary" />
-    <div className="absolute inset-0 opacity-10">
-      <div className="floating-blob w-96 h-96 top-0 left-0" />
-      <div className="floating-blob w-72 h-72 bottom-0 right-0" style={{ animationDelay: "3s" }} />
-    </div>
+  <section
+    id="cta"
+    className="relative py-16 bg-blue-600 overflow-hidden"
+  >
+    {/* Soft Glow (lightweight, not heavy blobs) */}
+    <div className="absolute -top-32 -left-32 w-72 h-72 bg-white/10 blur-3xl rounded-full" />
+    <div className="absolute -bottom-32 -right-32 w-72 h-72 bg-white/10 blur-3xl rounded-full" />
 
-    <div className="relative z-10 container mx-auto px-4 text-center">
+    <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-5xl font-extrabold text-primary-foreground mb-6"
+        transition={{ duration: 0.5 }}
+        className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight"
       >
         Ready to Launch Your Website This Week?
       </motion.h2>
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mt-3 text-blue-100 text-sm sm:text-base"
+      >
+        Let’s build something powerful for your business.
+      </motion.p>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ delay: 0.25 }}
+        className="mt-6"
       >
         <a
           href="#"
-          className="glow-button inline-flex items-center justify-center rounded-xl bg-primary-foreground px-10 py-4 text-lg font-bold text-primary"
+          className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-md hover:scale-105 transition-all duration-300"
         >
           Book Free Call Now
         </a>
       </motion.div>
+
     </div>
   </section>
 );
