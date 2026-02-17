@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const projects = [
-  { name: "OJK Jobs", tag: "Services", image: "/ojk-jobs.jpg" },
-  { name: "Pj Money Power", tag: "Finance", image: "/pj-money-power.jpg" },
+  { name: "OJK Jobs", tag: "Services", image: "/6.jpg" },
+  { name: "Pj Money Power", tag: "Fin Tech", image: "/7.jpg" },
   { name: "Wincity Infraworks", tag: "Infrastructure", image: "/wincity-infraworks.jpg" },
-  { name: "Danesh Industries", tag: "Corporate", image: "/danesh-industries.jpg" },
-  { name: "Vamtech", tag: "Technology", image: "/vamtech.jpg" },
-  { name: "Digimax", tag: "Marketing", image: "/digimax.jpg" },
-  { name: "Shayeen", tag: "E-commerce", image: "/shayeen.jpg" },
-
-  // ✅ NEW CARDS
-  { name: "The Bot Agency", tag: "Agency", image: "/the-bot-agency.jpg" },
-  { name: "Nagarathar Matrimony", tag: "Matrimony", image: "/nagarathar.jpg" },
+  { name: "Danesh Industries", tag: "Manufacturing", image: "/3.jpg" },
+  { name: "Vamtech", tag: "Green Energy", image: "/4.jpg" },
+  { name: "Digimax", tag: "Green Energy", image: "/5.jpg" },
+  { name: "Shayeen", tag: "E-commerce", image: "/2.jpg" },
+  { name: "Creative Axis", tag: "Interior Design", image: "/12.jpg" },
+   { name: "Evangelin Galdin", tag: "Growth Coach", image: "/11.jpg" },
+  { name: "Nagarathar Matrimony", tag: "Matrimony", image: "/8.jpg" },
   { name: "HRMS System", tag: "Software", image: "/hrms.jpg" },
 ];
 

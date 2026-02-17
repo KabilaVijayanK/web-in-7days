@@ -38,7 +38,7 @@ const Navbar = () => {
           <img
             src="/bot-logo.png"
             alt="The Bot Logo"
-            className="h-12 lg:h-16 w-auto object-contain brightness-0 transition-transform duration-300 hover:scale-105"
+           className="h-14 lg:h-20 w-auto object-contain brightness-0 transition-transform duration-300 hover:scale-105"
           />
         </a>
 
