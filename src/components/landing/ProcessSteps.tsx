@@ -22,7 +22,7 @@ const steps = [
 const ProcessSteps = () => (
   <section
     id="process"
-    className="py-14 bg-gradient-to-b from-white to-blue-50"
+    className="py-14 bg-gradient-to-b from-white to-blue-50 scroll-mt-24"
   >
     <div className="max-w-5xl mx-auto px-4 lg:px-6">
 

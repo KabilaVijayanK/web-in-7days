@@ -1,5 +1,5 @@
 import { MessageCircle, Mail, Phone } from "lucide-react";
-
+import { Link } from "react-router-dom";
 const Footer = () => (
   <footer className="bg-white text-gray-900 py-10 border-t border-gray-200">
     <div className="max-w-6xl mx-auto px-4">
@@ -70,8 +70,32 @@ const Footer = () => (
       </div>
 
       {/* Bottom */}
-      <div className="mt-6 pt-4 border-t border-gray-200 text-center text-xs text-gray-500">
-        © {new Date().getFullYear()} The Bot. All rights reserved.
+      <div className="mt-6 pt-4 border-t border-gray-200 text-center text-xs text-gray-500 space-y-2">
+
+        <div className="flex justify-center gap-4">
+
+  <Link
+    to="/privacy-policy"
+    className="hover:text-blue-600 transition"
+  >
+    Privacy Policy
+  </Link>
+
+  <span>|</span>
+
+  <Link
+    to="/terms-conditions"
+    className="hover:text-blue-600 transition"
+  >
+    Terms & Conditions
+  </Link>
+
+</div>
+
+        <p>
+          © {new Date().getFullYear()} The Bot. All rights reserved.
+        </p>
+
       </div>
 
     </div>

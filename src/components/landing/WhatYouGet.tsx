@@ -12,7 +12,7 @@ const features = [
 const WhatYouGet = () => (
   <section
     id="features"
-    className="py-20 bg-gradient-to-br from-blue-600 via-blue-600 to-blue-600 text-white"
+    className="py-20 bg-gradient-to-br from-blue-600 via-blue-600 to-blue-600 text-white scroll-mt-24"
   >
     <div className="mx-auto px-6 lg:px-16 max-w-6xl">
 

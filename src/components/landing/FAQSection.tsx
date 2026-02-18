@@ -52,7 +52,7 @@ const FAQSection = () => {
   return (
     <section
       id="faq"
-      className="bg-[#0B1220] text-white py-20"
+      className="bg-[#0B1220] text-white py-20 scroll-mt-24"
     >
       <div className="max-w-6xl mx-auto px-6">
 

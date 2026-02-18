@@ -67,7 +67,7 @@ const Portfolio = () => {
   }, [transition]);
 
   return (
-  <section className="relative py-16 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden">
+  <section id="portfolio" className="relative py-16 bg-gradient-to-b from-[#0B1220] to-[#0E1A30] text-white overflow-hidden scroll-mt-24">
 
     {/* Heading */}
     <div className="text-center mb-10">

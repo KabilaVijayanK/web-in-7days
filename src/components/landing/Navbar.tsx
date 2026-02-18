@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Props {
   setOpen: (value: boolean) => void;
@@ -17,12 +18,44 @@ const navLinks = [
 const Navbar = ({ setOpen }: Props) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Handle scroll to section when hash changes
+  useEffect(() => {
+    if (location.hash) {
+      const sectionId = location.hash.replace("#", "");
+      const element = document.getElementById(sectionId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location]);
+
+  // Handle navigation to sections
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    if (location.pathname === "/") {
+      // On home page, just scroll to section
+      const sectionId = href.replace("#", "");
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // On other pages, navigate to home with section hash
+      navigate("/" + href);
+    }
+  };
 
   return (
     <motion.nav
@@ -38,7 +71,7 @@ const Navbar = ({ setOpen }: Props) => {
       <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-4 lg:px-6">
 
         {/* LOGO */}
-        <a href="#" className="flex items-center">
+        <a href="/" className="flex items-center">
           <img
             src="/bot-logo.png"
             alt="The Bot Logo"
@@ -52,6 +85,7 @@ const Navbar = ({ setOpen }: Props) => {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors duration-300"
             >
               {link.label}
@@ -91,7 +125,10 @@ const Navbar = ({ setOpen }: Props) => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setMobileOpen(false);
+                  }}
                   className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
                 >
                   {link.label}
