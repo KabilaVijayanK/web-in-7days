@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
 
-const ClosingCTA = () => (
+interface Props {
+  setOpen: (value: boolean) => void;
+}
+
+const ClosingCTA = ({ setOpen }: Props) => (
   <section
     id="cta"
     className="relative py-16 bg-blue-600 overflow-hidden"
   >
-    {/* Soft Glow (lightweight, not heavy blobs) */}
+    {/* Soft Glow */}
     <div className="absolute -top-32 -left-32 w-72 h-72 bg-white/10 blur-3xl rounded-full" />
     <div className="absolute -bottom-32 -right-32 w-72 h-72 bg-white/10 blur-3xl rounded-full" />
 
@@ -36,12 +40,12 @@ const ClosingCTA = () => (
         transition={{ delay: 0.25 }}
         className="mt-6"
       >
-        <a
-          href="#"
+        <button
+          onClick={() => setOpen(true)}
           className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-md hover:scale-105 transition-all duration-300"
         >
           Book Free Call Now
-        </a>
+        </button>
       </motion.div>
 
     </div>

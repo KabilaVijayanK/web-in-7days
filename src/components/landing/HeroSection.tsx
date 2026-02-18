@@ -2,8 +2,11 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useRef } from "react";
 import FloatingBlobs from "./FloatingBlobs";
 import heroMockup from "@/assets/hero-mockup.png";
+interface Props {
+  setOpen: (value: boolean) => void;
+}
 
-const HeroSection = () => {
+const HeroSection = ({ setOpen }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   // Mouse tilt effect
@@ -68,30 +71,43 @@ const HeroSection = () => {
             viewport={{ once: true }}
             className="mt-8 flex flex-col sm:flex-row gap-4"
           >
-            <a
-              href="#cta"
-              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-blue-500/30 hover:scale-105 hover:shadow-blue-500/50 transition-all duration-300"
-            >
-              Get My Website Now
-            </a>
+           <button
+  onClick={() => setOpen(true)}
+  className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg hover:scale-105 transition"
+>
+  Get My Website Now
+</button>
 
-            <a
-              href="#cta"
-              className="inline-flex items-center justify-center rounded-xl border-2 border-blue-600 px-8 py-4 text-base font-bold text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300"
-            >
-              Get Free Consultation
-            </a>
+<button
+  onClick={() => setOpen(true)}
+  className="inline-flex items-center justify-center rounded-xl border-2 border-blue-600 px-8 py-4 text-base font-bold text-blue-600 hover:bg-blue-600 hover:text-white transition"
+>
+  Get Free Consultation
+</button>
           </motion.div>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            viewport={{ once: true }}
-            className="mt-4 text-sm text-gray-500"
-          >
-            ⚡ Limited production slots every week.
-          </motion.p>
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ delay: 0.5 }}
+  viewport={{ once: true }}
+  className="mt-4 text-sm text-gray-600 flex items-center gap-2"
+>
+  <motion.span
+  animate={{
+    opacity: [1, 0.4, 1, 0.6, 1],
+  }}
+  transition={{
+    duration: 0.6,
+    repeat: Infinity,
+    repeatDelay: 1,
+  }}
+  className="text-yellow-400 drop-shadow-[0_0_10px_rgba(255,200,0,1)]"
+>
+  ⚡
+</motion.span>
+Limited production slots every week.
+</motion.p>
         </div>
 
         {/* RIGHT IMAGE */}

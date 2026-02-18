@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
+interface Props {
+  setOpen: (value: boolean) => void;
+}
+
 const navLinks = [
   { label: "Pricing", href: "#pricingg" },
   { label: "Features", href: "#features" },
@@ -10,7 +14,7 @@ const navLinks = [
   { label: "FAQ", href: "#faq" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ setOpen }: Props) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -38,7 +42,7 @@ const Navbar = () => {
           <img
             src="/bot-logo.png"
             alt="The Bot Logo"
-           className="h-14 lg:h-20 w-auto object-contain brightness-0 transition-transform duration-300 hover:scale-105"
+            className="h-14 lg:h-20 w-auto object-contain brightness-0 transition-transform duration-300 hover:scale-105"
           />
         </a>
 
@@ -54,12 +58,13 @@ const Navbar = () => {
             </a>
           ))}
 
-          <a
-            href="#cta"
+          {/* CTA POPUP */}
+          <button
+            onClick={() => setOpen(true)}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-all duration-300"
           >
             Get Started
-          </a>
+          </button>
         </div>
 
         {/* Mobile Button */}
@@ -93,13 +98,16 @@ const Navbar = () => {
                 </a>
               ))}
 
-              <a
-                href="#cta"
-                onClick={() => setMobileOpen(false)}
+              {/* Mobile CTA */}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setOpen(true);
+                }}
                 className="mt-2 text-center rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white"
               >
                 Get Started
-              </a>
+              </button>
             </div>
           </motion.div>
         )}

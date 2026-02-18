@@ -1,6 +1,10 @@
 import { Clock, RefreshCcw, ThumbsUp, ShieldCheck, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
+interface Props {
+  setOpen: (value: boolean) => void;
+}
+
 const guarantees = [
   {
     icon: Clock,
@@ -24,7 +28,7 @@ const guarantees = [
   },
 ];
 
-const GuaranteeSection = () => {
+const GuaranteeSection = ({ setOpen }: Props) => {
   return (
     <section className="bg-gradient-to-b from-white to-blue-50 py-14">
       <div className="max-w-5xl mx-auto px-6 text-center">
@@ -80,7 +84,7 @@ const GuaranteeSection = () => {
           ))}
         </div>
 
-        {/* Compact CTA */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,12 +100,12 @@ const GuaranteeSection = () => {
             Free consultation. No commitment.
           </p>
 
-          <a
-            href="#cta"
+          <button
+            onClick={() => setOpen(true)}
             className="inline-block bg-white text-blue-600 text-sm font-semibold px-6 py-2 rounded-lg hover:scale-105 transition"
           >
             Get Started
-          </a>
+          </button>
         </motion.div>
 
       </div>

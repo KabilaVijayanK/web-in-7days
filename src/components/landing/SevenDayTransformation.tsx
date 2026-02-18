@@ -24,7 +24,7 @@ const containerVariants: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.12,
+      staggerChildren: 0.05,
     },
   },
 };
@@ -32,18 +32,17 @@ const containerVariants: Variants = {
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 40,
+    y: 30,
   },
   show: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.35,
+      ease: "easeOut",
     },
   },
 };
-
 const SevenDayTransformation = () => {
   return (
     <section className="bg-gradient-to-b from-blue-50 to-white py-14 overflow-hidden">
@@ -98,14 +97,20 @@ const SevenDayTransformation = () => {
 
                 {/* Icon Pop Animation */}
                 <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
-                  className="mt-4 mb-2 w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center"
-                >
-                  <step.icon className="w-5 h-5 text-white" />
-                </motion.div>
+  initial={{ scale: 0 }}
+  whileInView={{ scale: 1 }}
+  viewport={{ once: true }}
+  transition={{
+    delay: 0.05 * index,
+    type: "spring",
+    stiffness: 400,
+    damping: 15,
+    mass: 0.5,
+  }}
+  className="mt-4 mb-2 w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center"
+>
+  <step.icon className="w-5 h-5 text-white" />
+</motion.div>
 
                 <h3 className="text-sm font-semibold text-gray-900">
                   {step.title}

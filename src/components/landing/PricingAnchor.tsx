@@ -22,11 +22,17 @@ const AnimatedPrice = ({ value }: { value: number }) => {
     return () => clearInterval(counter);
   }, [value]);
 
-  return (
-    <span className="gradient-text">
-      ₹{count.toLocaleString()}
+ return (
+  <span className="relative inline-block overflow-hidden gradient-text">
+    
+    {/* Razor Shine */}
+    <span className="absolute inset-0 pointer-events-none">
+      <span className="razor-shine" />
     </span>
-  );
+
+    ₹{count.toLocaleString()}
+  </span>
+);
 };
 
 const PricingAnchor = () => (

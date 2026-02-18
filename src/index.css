@@ -134,3 +134,55 @@
   33% { transform: translateY(-20px) translateX(10px) scale(1.05); }
   66% { transform: translateY(10px) translateX(-10px) scale(0.95); }
 }
+.razor-shine {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: razorMove 2s ease-in-out infinite;
+}
+
+@keyframes razorMove {
+  0% {
+    left: -60%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+.growth-premium {
+  position: relative;
+  box-shadow: 0 0 0 rgba(59,130,246,0.4);
+  animation: premiumPulse 3s ease-in-out infinite;
+}
+
+@keyframes premiumPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59,130,246,0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px 10px rgba(59,130,246,0.25);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59,130,246,0.4);
+  }
+}
+.input-box {
+  @apply flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-sm border border-blue-100 focus-within:ring-2 focus-within:ring-blue-400;
+}
+
+.input {
+  @apply w-full outline-none bg-transparent text-sm;
+}
+
+.icon {
+  @apply text-blue-600 w-5 h-5;
+}
