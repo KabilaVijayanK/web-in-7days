@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Phone, Mail, MessageSquare, X } from "lucide-react";
+import { User, Phone, Mail, X,Check } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
@@ -11,15 +11,16 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    countryCode: "+91",
     email: "",
-    message: "",
+    budget: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
@@ -28,16 +29,14 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
-    if (!form.name || !form.phone || !form.email || !form.message) {
-      setError("Please fill all fields.");
+    if (!form.name || !form.phone || !form.email) {
+      setError("Please fill all required fields.");
       return;
     }
 
-    // Simulate submission
     setTimeout(() => {
       setSubmitted(true);
-    }, 500);
+    }, 400);
   };
 
   return (
@@ -53,8 +52,8 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
             initial={{ scale: 0.9, opacity: 0, y: 40 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="relative w-full max-w-lg rounded-3xl bg-white/90 backdrop-blur-xl p-8 shadow-[0_40px_80px_rgba(0,0,0,0.15)]"
+            transition={{ duration: 0.35 }}
+            className="relative w-full max-w-md rounded-3xl bg-white p-8 shadow-[0_30px_60px_rgba(0,0,0,0.15)]"
           >
             {/* Close */}
             <button
@@ -62,74 +61,114 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
                 setOpen(false);
                 setSubmitted(false);
               }}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black"
+              className="absolute top-4 right-4 text-gray-400 hover:text-black"
             >
               <X size={20} />
             </button>
 
             {!submitted ? (
               <>
-                <h2 className="text-2xl font-bold text-gray-900 text-center">
-                  Let’s Build Your Website
+                <h2 className="text-xl font-bold text-gray-900 text-center">
+                  Get Your Website In 7 Days
                 </h2>
 
-                <p className="text-sm text-gray-600 text-center mt-2 mb-6">
-                  Fill out the form below and we’ll get back to you within 24 hours.
+                <p className="text-sm text-gray-500 text-center mt-2 mb-6">
+                  Fill the details and we’ll contact you within 24 hours.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
 
                   {/* Name */}
-                  <div className="input-box">
-                    <User className="icon" />
+                  <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-200 focus-within:border-blue-500 transition">
+                    <User className="w-4 h-4 text-blue-600" />
                     <input
                       type="text"
                       name="name"
                       placeholder="Full Name"
                       value={form.name}
                       onChange={handleChange}
-                      className="input"
+                      className="w-full bg-transparent outline-none text-sm"
                     />
                   </div>
 
                   {/* Phone */}
-                  <div className="input-box">
-                    <Phone className="icon" />
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={form.phone}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </div>
+<div className="flex items-center bg-gray-50 rounded-xl border border-gray-200 focus-within:border-blue-500 transition overflow-hidden">
+
+  {/* Country Code */}
+  <select
+    name="countryCode"
+    value={form.countryCode}
+    onChange={handleChange}
+    className="bg-transparent px-3 py-3 text-sm outline-none border-r border-gray-200 cursor-pointer"
+  >
+    <option value="+91">🇮🇳 +91</option>
+    <option value="+1">🇺🇸 +1</option>
+    <option value="+44">🇬🇧 +44</option>
+    <option value="+971">🇦🇪 +971</option>
+  </select>
+
+  {/* Phone Input */}
+  <div className="flex items-center gap-2 px-3 flex-1">
+    <Phone className="w-4 h-4 text-blue-600" />
+    <input
+      type="tel"
+      name="phone"
+      placeholder="Phone Number"
+      value={form.phone}
+      onChange={handleChange}
+      className="w-full bg-transparent outline-none text-sm"
+    />
+  </div>
+
+</div>
 
                   {/* Email */}
-                  <div className="input-box">
-                    <Mail className="icon" />
+                  <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-200 focus-within:border-blue-500 transition">
+                    <Mail className="w-4 h-4 text-blue-600" />
                     <input
                       type="email"
                       name="email"
                       placeholder="Email Address"
                       value={form.email}
                       onChange={handleChange}
-                      className="input"
+                      className="w-full bg-transparent outline-none text-sm"
                     />
                   </div>
 
-                  {/* Message */}
-                  <div className="input-box items-start">
-                    <MessageSquare className="icon mt-1" />
-                    <textarea
-                      name="message"
-                      placeholder="Tell us about your business..."
-                      rows={3}
-                      value={form.message}
-                      onChange={handleChange}
-                      className="input resize-none"
-                    />
-                  </div>
+                 <div>
+  <p className="text-[11px] text-gray-500 mb-2">
+    Investment Range
+  </p>
+
+  <div className="space-y-2">
+    {[
+      "Less than 10,000",
+      "Between 25,000 to 50,000",
+      "More than 50,000",
+    ].map((option) => (
+      <div
+        key={option}
+        onClick={() =>
+          setForm({
+            ...form,
+            budget: form.budget === option ? "" : option,
+          })
+        }
+        className={`flex items-center justify-between cursor-pointer rounded-lg px-3 py-2 border text-sm transition-all duration-200 ${
+          form.budget === option
+            ? "border-blue-600 bg-blue-50"
+            : "border-gray-200 bg-white hover:border-blue-400"
+        }`}
+      >
+        <span>{option}</span>
+
+        {form.budget === option && (
+          <Check className="w-3.5 h-3.5 text-blue-600" />
+        )}
+      </div>
+    ))}
+  </div>
+</div>
 
                   {error && (
                     <p className="text-red-500 text-xs text-center">{error}</p>
@@ -137,27 +176,45 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
 
                   <button
                     type="submit"
-                    className="w-full mt-4 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 py-4 text-white font-semibold shadow-lg hover:scale-[1.02] transition-all duration-300"
+                    className="w-full rounded-full bg-blue-600 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 hover:scale-[1.02] transition-all duration-300"
                   >
-                    Get Free Consultation
+                    Book Your Demo
                   </button>
 
-                  <p className="text-xs text-gray-600 text-center mt-4 flex items-center justify-center gap-1">
+                  <p className="text-xs text-gray-500 text-center mt-3 flex items-center justify-center gap-1">
                     <span className="text-yellow-500">⚡</span>
-                    Limited production slots every week
+                    This week only 3 slots available!
                   </p>
+
                 </form>
               </>
-            ) : (
-              <div className="text-center py-10">
-                <h3 className="text-xl font-bold text-green-600">
-                  ✅ Form Submitted!
-                </h3>
-                <p className="text-gray-600 mt-3 text-sm">
-                  We will get back to you soon.
-                </p>
-              </div>
-            )}
+            ) :(
+  <motion.div
+    initial={{ opacity: 0, scale: 0.96 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.3 }}
+    className="text-center py-5"
+  >
+    {/* Compact Success Icon */}
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 260, damping: 18 }}
+      className="mx-auto mb-2 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center"
+    >
+      <span className="text-lg text-green-600">✓</span>
+    </motion.div>
+
+    {/* Same Content */}
+    <h3 className="text-base font-bold text-green-600">
+       Form Submitted!
+    </h3>
+
+    <p className="text-gray-600 mt-1 text-xs">
+      We are working round the clock, connecting with you shortly.
+    </p>
+  </motion.div>
+)}
           </motion.div>
         </motion.div>
       )}
