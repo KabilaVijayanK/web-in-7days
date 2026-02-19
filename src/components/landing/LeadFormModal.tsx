@@ -7,6 +7,10 @@ interface Props {
   setOpen: (value: boolean) => void;
 }
 
+// API Configuration - can be moved to environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+const LEADS_ENDPOINT = `${API_BASE_URL}/api/leads/website/`;
+
 const LeadFormModal = ({ open, setOpen }: Props) => {
   const [form, setForm] = useState({
     name: "",
@@ -14,29 +18,107 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
     countryCode: "+91",
     email: "",
     budget: "",
+    investmentRange: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
     setError("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleBudgetSelect = (option: string) => {
+    // Map budget labels to API investment_range values
+    const budgetMap: { [key: string]: string } = {
+      "Less than 10,000": "less_than_10k",
+      "Between 25,000 to 50,000": "25k_to_50k",
+      "More than 50,000": "more_than_50k",
+    };
+    
+    setForm({
+      ...form,
+      budget: form.budget === option ? "" : option,
+      investmentRange: form.budget === option ? "" : (budgetMap[option] || ""),
+    });
+  };
 
-    if (!form.name || !form.phone || !form.email) {
-      setError("Please fill all required fields.");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    // Validation
+    if (!form.name.trim() || !form.phone.trim() || !form.email.trim() || !form.investmentRange) {
+      setError("Please fill all required fields including investment range.");
       return;
     }
 
-    setTimeout(() => {
-      setSubmitted(true);
-    }, 400);
+    setIsLoading(true);
+
+    try {
+      // Prepare request payload
+      const payload = {
+        name: form.name.trim(),
+        phone: `${form.countryCode}${form.phone.trim()}`,
+        email: form.email.trim(),
+        investment_range: form.investmentRange,
+        message: "",
+      };
+
+      // Make API request
+      const response = await fetch(LEADS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Handle response
+      if (response.status === 201 || response.ok) {
+        setSubmitted(true);
+        // Reset form after showing success
+        setTimeout(() => {
+          setForm({
+            name: "",
+            phone: "",
+            countryCode: "+91",
+            email: "",
+            budget: "",
+            investmentRange: "",
+          });
+        }, 1000);
+      } else if (response.status === 400) {
+        // Handle validation errors from backend
+        const errorData = await response.json();
+        const errorMessage =
+          errorData.message ||
+          errorData.detail ||
+          "Invalid data. Please check your inputs.";
+        setError(errorMessage);
+      } else {
+        setError(
+          `Server error (${response.status}). Please try again later.`
+        );
+      }
+    } catch (err) {
+      // Handle network errors or parsing errors
+      if (err instanceof TypeError) {
+        setError(
+          "Unable to connect to server. Please check your internet connection."
+        );
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+      console.error("Lead form submission error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,6 +142,7 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
               onClick={() => {
                 setOpen(false);
                 setSubmitted(false);
+                setError("");
               }}
               className="absolute top-4 right-4 text-gray-400 hover:text-black"
             >
@@ -148,12 +231,7 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
     ].map((option) => (
       <div
         key={option}
-        onClick={() =>
-          setForm({
-            ...form,
-            budget: form.budget === option ? "" : option,
-          })
-        }
+        onClick={() => handleBudgetSelect(option)}
         className={`flex items-center justify-between cursor-pointer rounded-lg px-3 py-2 border text-sm transition-all duration-200 ${
           form.budget === option
             ? "border-blue-600 bg-blue-50"
@@ -176,9 +254,10 @@ const LeadFormModal = ({ open, setOpen }: Props) => {
 
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-blue-600 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 hover:scale-[1.02] transition-all duration-300"
+                    disabled={isLoading}
+                    className="w-full rounded-full bg-blue-600 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 hover:scale-[1.02] transition-all duration-300 disabled:opacity-75 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    Book Your Demo
+                    {isLoading ? "Submitting..." : "Book Your Demo"}
                   </button>
 
                   <p className="text-xs text-gray-500 text-center mt-3 flex items-center justify-center gap-1">
